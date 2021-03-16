@@ -1,1 +1,9 @@
-<p>produits works!</p>
+<button (click)="onClick()">Cliquez</button>
+
+<div *ngFor = "let t of tabData">
+    {{t}}
+</div>
+
+<div *ngFor = "let o of observable2$ | async">
+    {{o}}
+</div>
