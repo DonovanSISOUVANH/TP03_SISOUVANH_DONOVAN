@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable, of, from} from 'rxjs';
+import { FirstService } from '../service/first.service';
 
 @Component({
   selector: 'app-produits',
@@ -9,12 +10,13 @@ import {Observable, of, from} from 'rxjs';
 export class ProduitsComponent implements OnInit {
 
   observable$ : Observable<string>;
-  tabData : Array<String> =[];
+  tabData : Array<String> = [];
   subscribe : any;
 
   observable2$ : Observable<Array<string>> = of (["Eau","Pain","Steak","Frites","Yaourt"])
-
-  constructor() { }
+  observable3$ : Observable<any> = null;
+  
+  constructor(private firstService  : FirstService) { }
 
   ngOnInit(): void {
     this.observable$ = new Observable(
@@ -25,6 +27,14 @@ export class ProduitsComponent implements OnInit {
         observer.complete();
       }
     )
+
+    this.observable3$ = from ([
+      {"title":"Eau","prix": 4},
+      {"title":"Pain","prix": 1},
+      {"title":"Steak","prix": 6},
+      {"title":"Frite","prix": 3},
+    ]
+    )
   }
 
   onClick(){
@@ -33,12 +43,16 @@ export class ProduitsComponent implements OnInit {
       this.subscribe.unsubscribe();
     }
 
-    this.subscribe = this.observable2$.subscribe (
+    this.subscribe = this.observable$.subscribe (
       {
       next : value => {this.tabData.push(value)},
       complete : () => {console.log ("complete")},
       error : err => {console.log(err)}
       }
     )
+  }
+
+  onClickBackEnd(){
+    this.observable3$ = this.firstService.getProduits ();
   }
 }
