@@ -10,7 +10,7 @@ import { FirstService } from '../service/first.service';
 export class ProduitsComponent implements OnInit {
 
   observable$ : Observable<string>;
-  tabData : Array<String> = [];
+  tabData : Array<String> ;
   subscribe : any;
 
   observable2$ : Observable<Array<string>> = of (["Eau","Pain","Steak","Frites","Yaourt"])
